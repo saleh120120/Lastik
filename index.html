@@ -12,20 +12,31 @@
     .card-header { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); color: #ffffff; padding: 26px 24px; text-align: center; }
     .card-header h1 { font-size: 1.45rem; font-weight: 700; margin-bottom: 8px; }
     .card-header p { font-size: 0.92rem; opacity: 0.92; }
-    .notice-banner { background-color: #fffbeb; border-bottom: 2px solid #f59e0b; color: #b45309; padding: 14px 20px; text-align: center; font-size: 0.98rem; font-weight: 700; line-height: 1.7; }
-    form { padding: 26px 24px; }
+    
+    .notices-wrapper { padding: 20px 24px 0 24px; display: flex; flex-direction: column; gap: 12px; }
+    .notice-chinese { background-color: #fffbeb; border: 1.5px solid #f59e0b; color: #b45309; padding: 12px 16px; border-radius: 10px; text-align: center; font-size: 0.95rem; font-weight: 700; line-height: 1.7; }
+    .disclaimer-red { background-color: #fef2f2; border: 2px solid #dc2626; color: #b91c1c; padding: 14px 16px; border-radius: 10px; text-align: center; font-size: 0.92rem; font-weight: 700; line-height: 1.8; }
+
+    form { padding: 22px 24px 28px 24px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     @media (max-width: 580px) { .form-grid { grid-template-columns: 1fr; } }
     .form-group { display: flex; flex-direction: column; }
     .form-group.full-width { grid-column: 1 / -1; }
     .form-group label { font-size: 0.9rem; font-weight: 600; margin-bottom: 7px; color: #243b53; }
-    .form-group input { padding: 12px 14px; font-size: 1rem; border: 1.5px solid #cbd5e1; border-radius: 10px; background-color: #f8fafc; color: #0f172a; transition: all 0.2s ease; outline: none; }
-    .form-group input:focus { border-color: #2563eb; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-    .form-group input.input-error { border-color: #dc2626; background-color: #fef2f2; }
+    .form-group input, .form-group select { padding: 12px 14px; font-size: 1rem; border: 1.5px solid #cbd5e1; border-radius: 10px; background-color: #f8fafc; color: #0f172a; transition: all 0.2s ease; outline: none; }
+    .form-group select { cursor: pointer; }
+    .form-group input:focus, .form-group select:focus { border-color: #2563eb; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+    .form-group input.input-error, .form-group select.input-error { border-color: #dc2626; background-color: #fef2f2; }
+    
+    .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 18px; background: #f8fafc; padding: 12px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; }
+    .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: #2563eb; }
+    .checkbox-group label { font-size: 0.9rem; font-weight: 600; color: #1e293b; cursor: pointer; }
+
     .alert { display: none; padding: 13px 16px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; margin-bottom: 20px; text-align: center; }
     .alert-error { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
     .alert-success { background-color: #dcfce7; color: #15803d; border: 1px solid #86efac; }
-    .submit-btn { margin-top: 24px; width: 100%; padding: 14px; font-size: 1.05rem; font-weight: 700; color: #ffffff; background: #2563eb; border: none; border-radius: 12px; cursor: pointer; transition: background 0.2s ease, transform 0.1s ease; }
+    
+    .submit-btn { margin-top: 20px; width: 100%; padding: 14px; font-size: 1.05rem; font-weight: 700; color: #ffffff; background: #2563eb; border: none; border-radius: 12px; cursor: pointer; transition: background 0.2s ease, transform 0.1s ease; }
     .submit-btn:hover { background: #1d4ed8; }
     .submit-btn:active { transform: scale(0.99); }
     .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
@@ -39,8 +50,13 @@
       <p>لطفاً تمامی مشخصات درخواستی را با دقت در کادرهای زیر وارد نمایید</p>
     </div>
 
-    <div class="notice-banner">
-      ⚠️ توجه مهم: این پیش‌ثبت‌نام صرفاً مربوط به «لاستیک‌های چینی» می‌باشد.
+    <div class="notices-wrapper">
+      <div class="notice-chinese">
+        ⚠️ توجه: این پیش‌ثبت‌نام صرفاً مربوط به «لاستیک‌های چینی» می‌باشد.
+      </div>
+      <div class="disclaimer-red">
+        ⛔ سلب مسئولیت مهم: این پیش‌ثبت‌نام صرفاً جهت نیازسنجی اولیه بوده و برای ثبت‌نام‌کننده و برگزارکننده هیچ‌گونه تعهد یا حق قانونی جهت خرید یا تأمین قطعی لاستیک ایجاد نمی‌کند.
+      </div>
     </div>
 
     <form id="tireForm" novalidate>
@@ -58,8 +74,8 @@
         </div>
 
         <div class="form-group">
-          <label for="carModel">مدل ماشین</label>
-          <input type="text" id="carModel" placeholder="مثال: کشنده فوتون / پژو پارس" />
+          <label for="carModel">نوع ماشین</label>
+          <input type="text" id="carModel" placeholder="مثال: ولوو FH / بنز آکتروس" />
         </div>
 
         <div class="form-group">
@@ -68,8 +84,8 @@
         </div>
 
         <div class="form-group">
-          <label for="smartCard">کارت هوشمند</label>
-          <input type="text" id="smartCard" placeholder="شماره کارت هوشمند" />
+          <label for="smartCard">کارت هوشمند کشنده</label>
+          <input type="text" id="smartCard" placeholder="شماره کارت هوشمند کشنده" />
         </div>
 
         <div class="form-group">
@@ -78,9 +94,20 @@
         </div>
 
         <div class="form-group full-width">
-          <label for="tireCount">تعداد جفت حلقه لاستیک مورد نیاز</label>
-          <input type="text" id="tireCount" placeholder="مثال: ۲ جفت" />
+          <label for="tireCount">تعداد حلقه مورد نیاز</label>
+          <select id="tireCount">
+            <option value="">انتخاب کنید (حداکثر ۴ حلقه)...</option>
+            <option value="۱ حلقه">۱ حلقه</option>
+            <option value="۲ حلقه">۲ حلقه</option>
+            <option value="۳ حلقه">۳ حلقه</option>
+            <option value="۴ حلقه">۴ حلقه</option>
+          </select>
         </div>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="termsCheck" />
+        <label for="termsCheck">شرایط بالا و عدم ایجاد تعهد برای تأمین لاستیک را مطالعه کرده و می‌پذیرم.</label>
       </div>
 
       <button type="submit" id="submitBtn" class="submit-btn">ثبت اطلاعات</button>
@@ -94,20 +121,22 @@
     const form = document.getElementById("tireForm");
     const statusMessage = document.getElementById("statusMessage");
     const submitBtn = document.getElementById("submitBtn");
+    const termsCheck = document.getElementById("termsCheck");
 
     const fields = [
       { id: "phone", label: "شماره تماس" },
       { id: "nationalId", label: "کد ملی" },
-      { id: "carModel", label: "مدل ماشین" },
+      { id: "carModel", label: "نوع ماشین" },
       { id: "plateNumber", label: "شماره پلاک" },
-      { id: "smartCard", label: "کارت هوشمند" },
+      { id: "smartCard", label: "کارت هوشمند کشنده" },
       { id: "tireSize", label: "سایز لاستیک" },
-      { id: "tireCount", label: "تعداد جفت حلقه لاستیک" }
+      { id: "tireCount", label: "تعداد حلقه مورد نیاز" }
     ];
 
     fields.forEach(field => {
       const inputEl = document.getElementById(field.id);
-      inputEl.addEventListener("input", () => {
+      const eventName = inputEl.tagName === "SELECT" ? "change" : "input";
+      inputEl.addEventListener(eventName, () => {
         if (inputEl.value.trim() !== "") {
           inputEl.classList.remove("input-error");
         }
@@ -128,7 +157,7 @@
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
       statusMessage.style.display = "none";
-      let hasEmptyField = false;
+      let hasError = false;
       const values = {};
 
       fields.forEach(field => {
@@ -137,14 +166,19 @@
         values[field.id] = val;
         if (val === "") {
           inputEl.classList.add("input-error");
-          hasEmptyField = true;
+          hasError = true;
         } else {
           inputEl.classList.remove("input-error");
         }
       });
 
-      if (hasEmptyField) {
+      if (hasError) {
         showMessage("لطفاً همه کادرها را کامل کنید", "error");
+        return;
+      }
+
+      if (!termsCheck.checked) {
+        showMessage("لطفاً تاییدیه شرایط و سلب تعهد را علامت بزنید.", "error");
         return;
       }
 
@@ -158,11 +192,12 @@
         `━━━━━━━━━━━━━━━\n` +
         `📞 <b>شماره تماس:</b> ${escapeHtml(values.phone)}\n` +
         `🆔 <b>کد ملی:</b> ${escapeHtml(values.nationalId)}\n` +
-        `🚗 <b>مدل ماشین:</b> ${escapeHtml(values.carModel)}\n` +
+        `🚛 <b>نوع ماشین:</b> ${escapeHtml(values.carModel)}\n` +
         `🔢 <b>شماره پلاک:</b> ${escapeHtml(values.plateNumber)}\n` +
-        `💳 <b>کارت هوشمند ماشین:</b> ${escapeHtml(values.smartCard)}\n` +
+        `💳 <b>کارت هوشمند کشنده:</b> ${escapeHtml(values.smartCard)}\n` +
         `📏 <b>سایز لاستیک:</b> ${escapeHtml(values.tireSize)}\n` +
-        `📦 <b>تعداد جفت لاستیک:</b> ${escapeHtml(values.tireCount)}\n` +
+        `📦 <b>تعداد حلقه مورد نیاز:</b> ${escapeHtml(values.tireCount)}\n` +
+        `✅ <b>پذیرش شرایط:</b> بله\n` +
         `━━━━━━━━━━━━━━━\n` +
         `🕒 <b>زمان ثبت:</b> ${now}`;
 
