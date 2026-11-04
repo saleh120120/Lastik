@@ -28,15 +28,11 @@
     .form-group input:focus, .form-group select:focus { border-color: #2563eb; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
     .form-group input.input-error, .form-group select.input-error { border-color: #dc2626; background-color: #fef2f2; }
     
-    .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 18px; background: #f8fafc; padding: 12px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; }
-    .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: #2563eb; }
-    .checkbox-group label { font-size: 0.9rem; font-weight: 600; color: #1e293b; cursor: pointer; }
-
     .alert { display: none; padding: 13px 16px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; margin-bottom: 20px; text-align: center; }
     .alert-error { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
     .alert-success { background-color: #dcfce7; color: #15803d; border: 1px solid #86efac; }
     
-    .submit-btn { margin-top: 20px; width: 100%; padding: 14px; font-size: 1.05rem; font-weight: 700; color: #ffffff; background: #2563eb; border: none; border-radius: 12px; cursor: pointer; transition: background 0.2s ease, transform 0.1s ease; }
+    .submit-btn { margin-top: 24px; width: 100%; padding: 14px; font-size: 1.05rem; font-weight: 700; color: #ffffff; background: #2563eb; border: none; border-radius: 12px; cursor: pointer; transition: background 0.2s ease, transform 0.1s ease; }
     .submit-btn:hover { background: #1d4ed8; }
     .submit-btn:active { transform: scale(0.99); }
     .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
@@ -105,11 +101,6 @@
         </div>
       </div>
 
-      <div class="checkbox-group">
-        <input type="checkbox" id="termsCheck" />
-        <label for="termsCheck">شرایط بالا و عدم ایجاد تعهد برای تأمین لاستیک را مطالعه کرده و می‌پذیرم.</label>
-      </div>
-
       <button type="submit" id="submitBtn" class="submit-btn">ثبت اطلاعات</button>
     </form>
   </div>
@@ -121,7 +112,6 @@
     const form = document.getElementById("tireForm");
     const statusMessage = document.getElementById("statusMessage");
     const submitBtn = document.getElementById("submitBtn");
-    const termsCheck = document.getElementById("termsCheck");
 
     const fields = [
       { id: "phone", label: "شماره تماس" },
@@ -157,7 +147,7 @@
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
       statusMessage.style.display = "none";
-      let hasError = false;
+      let hasEmptyField = false;
       const values = {};
 
       fields.forEach(field => {
@@ -166,19 +156,14 @@
         values[field.id] = val;
         if (val === "") {
           inputEl.classList.add("input-error");
-          hasError = true;
+          hasEmptyField = true;
         } else {
           inputEl.classList.remove("input-error");
         }
       });
 
-      if (hasError) {
+      if (hasEmptyField) {
         showMessage("لطفاً همه کادرها را کامل کنید", "error");
-        return;
-      }
-
-      if (!termsCheck.checked) {
-        showMessage("لطفاً تاییدیه شرایط و سلب تعهد را علامت بزنید.", "error");
         return;
       }
 
@@ -197,7 +182,6 @@
         `💳 <b>کارت هوشمند کشنده:</b> ${escapeHtml(values.smartCard)}\n` +
         `📏 <b>سایز لاستیک:</b> ${escapeHtml(values.tireSize)}\n` +
         `📦 <b>تعداد حلقه مورد نیاز:</b> ${escapeHtml(values.tireCount)}\n` +
-        `✅ <b>پذیرش شرایط:</b> بله\n` +
         `━━━━━━━━━━━━━━━\n` +
         `🕒 <b>زمان ثبت:</b> ${now}`;
 
