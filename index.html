@@ -9,13 +9,15 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', Tahoma, sans-serif; }
     body { background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; color: #102a43; }
     .card { background: #ffffff; width: 100%; max-width: 640px; border-radius: 18px; box-shadow: 0 12px 32px rgba(16, 42, 67, 0.1); overflow: hidden; }
-    .card-header { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); color: #ffffff; padding: 28px 24px; text-align: center; }
+    .card-header { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); color: #ffffff; padding: 26px 24px; text-align: center; }
     .card-header h1 { font-size: 1.45rem; font-weight: 700; margin-bottom: 8px; }
-    .card-header p { font-size: 0.92rem; opacity: 0.9; }
-    form { padding: 28px 24px; }
+    .card-header p { font-size: 0.92rem; opacity: 0.92; }
+    .notice-banner { background-color: #fffbeb; border-bottom: 2px solid #f59e0b; color: #b45309; padding: 14px 20px; text-align: center; font-size: 0.98rem; font-weight: 700; line-height: 1.7; }
+    form { padding: 26px 24px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     @media (max-width: 580px) { .form-grid { grid-template-columns: 1fr; } }
     .form-group { display: flex; flex-direction: column; }
+    .form-group.full-width { grid-column: 1 / -1; }
     .form-group label { font-size: 0.9rem; font-weight: 600; margin-bottom: 7px; color: #243b53; }
     .form-group input { padding: 12px 14px; font-size: 1rem; border: 1.5px solid #cbd5e1; border-radius: 10px; background-color: #f8fafc; color: #0f172a; transition: all 0.2s ease; outline: none; }
     .form-group input:focus { border-color: #2563eb; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
@@ -34,7 +36,11 @@
   <div class="card">
     <div class="card-header">
       <h1>سامانه پیش ثبت‌نام لاستیک</h1>
-      <p>لطفاً مشخصات خود و خودرو را با دقت در کادرهای زیر وارد نمایید</p>
+      <p>لطفاً تمامی مشخصات درخواستی را با دقت در کادرهای زیر وارد نمایید</p>
+    </div>
+
+    <div class="notice-banner">
+      ⚠️ توجه مهم: این پیش‌ثبت‌نام صرفاً مربوط به «لاستیک‌های چینی» می‌باشد.
     </div>
 
     <form id="tireForm" novalidate>
@@ -45,25 +51,35 @@
           <label for="phone">شماره تماس</label>
           <input type="tel" id="phone" placeholder="مثال: 09123456789" />
         </div>
+
         <div class="form-group">
           <label for="nationalId">کد ملی</label>
           <input type="text" id="nationalId" inputmode="numeric" maxlength="10" placeholder="کد ملی ۱۰ رقمی" />
         </div>
+
         <div class="form-group">
           <label for="carModel">مدل ماشین</label>
-          <input type="text" id="carModel" placeholder="مثال: پژو پارس / کشنده فوتون" />
+          <input type="text" id="carModel" placeholder="مثال: کشنده فوتون / پژو پارس" />
         </div>
-        <div class="form-group">
-          <label for="engineNumber">شماره موتور</label>
-          <input type="text" id="engineNumber" placeholder="شماره موتور مندرج در کارت" />
-        </div>
+
         <div class="form-group">
           <label for="plateNumber">شماره پلاک</label>
           <input type="text" id="plateNumber" placeholder="مثال: ۱۲ ع ۳۴۵ - ایران ۶۷" />
         </div>
+
         <div class="form-group">
           <label for="smartCard">کارت هوشمند</label>
           <input type="text" id="smartCard" placeholder="شماره کارت هوشمند" />
+        </div>
+
+        <div class="form-group">
+          <label for="tireSize">سایز لاستیک درخواستی</label>
+          <input type="text" id="tireSize" placeholder="مثال: 315/80R22.5" />
+        </div>
+
+        <div class="form-group full-width">
+          <label for="tireCount">تعداد جفت حلقه لاستیک مورد نیاز</label>
+          <input type="text" id="tireCount" placeholder="مثال: ۲ جفت" />
         </div>
       </div>
 
@@ -83,9 +99,10 @@
       { id: "phone", label: "شماره تماس" },
       { id: "nationalId", label: "کد ملی" },
       { id: "carModel", label: "مدل ماشین" },
-      { id: "engineNumber", label: "شماره موتور" },
       { id: "plateNumber", label: "شماره پلاک" },
-      { id: "smartCard", label: "کارت هوشمند" }
+      { id: "smartCard", label: "کارت هوشمند" },
+      { id: "tireSize", label: "سایز لاستیک" },
+      { id: "tireCount", label: "تعداد جفت حلقه لاستیک" }
     ];
 
     fields.forEach(field => {
@@ -137,14 +154,15 @@
       const now = new Intl.DateTimeFormat("fa-IR", { dateStyle: "short", timeStyle: "short" }).format(new Date());
 
       const telegramText =
-        `🛞 <b>پیش ثبت‌نام جدید لاستیک</b>\n` +
+        `🛞 <b>پیش ثبت‌نام جدید لاستیک (چینی)</b>\n` +
         `━━━━━━━━━━━━━━━\n` +
         `📞 <b>شماره تماس:</b> ${escapeHtml(values.phone)}\n` +
         `🆔 <b>کد ملی:</b> ${escapeHtml(values.nationalId)}\n` +
         `🚗 <b>مدل ماشین:</b> ${escapeHtml(values.carModel)}\n` +
-        `⚙️ <b>شماره موتور:</b> ${escapeHtml(values.engineNumber)}\n` +
         `🔢 <b>شماره پلاک:</b> ${escapeHtml(values.plateNumber)}\n` +
         `💳 <b>کارت هوشمند:</b> ${escapeHtml(values.smartCard)}\n` +
+        `📏 <b>سایز لاستیک:</b> ${escapeHtml(values.tireSize)}\n` +
+        `📦 <b>تعداد جفت لاستیک:</b> ${escapeHtml(values.tireCount)}\n` +
         `━━━━━━━━━━━━━━━\n` +
         `🕒 <b>زمان ثبت:</b> ${now}`;
 
